@@ -56,7 +56,7 @@ const HistoryInsights = ({
       {/* Header */}
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-[#064E3B]">
-          Your Previous Analyses
+          Your Previous Analysis
         </h1>
         <div className="text-sm text-gray-400 flex items-center gap-1">
           <Clock className="w-4 h-4" /> Recent Reports
