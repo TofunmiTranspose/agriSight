@@ -1,5 +1,6 @@
 import { Plus, MessageSquare, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import type { pageType } from "../App";
 
 const mockHistory = [
   {
@@ -37,7 +38,7 @@ const mockTips = [
 const HistoryInsights = ({
   navigate,
 }: {
-  navigate: (page: string) => void;
+  navigate: (page: pageType) => void;
 }) => {
   return (
     <motion.div

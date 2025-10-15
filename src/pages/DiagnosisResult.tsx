@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, CheckCircle, Save, Repeat, RefreshCcw } from "lucide-react";
 import { motion } from "framer-motion";
+import type { pageType } from "../App";
 
 const DiagnosisResult = ({
   navigate,
+  image,
 }: {
-  navigate: (page: string) => void;
+  navigate: (page: pageType) => void;
+  image: File | null;
 }) => {
   const [loading, setLoading] = useState(true);
   const brandGreen = "#1FAB89";
@@ -19,8 +22,7 @@ const DiagnosisResult = ({
       "Ensure 2m spacing between cassava plants for better air flow.",
     ],
     time: "3:27 PM",
-    imageUrl:
-      "https://via.placeholder.com/200x150/f0f0f0/999999?text=Infected+Cassava",
+    imageUrl: image ? URL.createObjectURL(image) : "https://placehold.co/100",
   };
 
   useEffect(() => {
@@ -158,12 +160,12 @@ const DiagnosisResult = ({
         transition={{ delay: 0.4 }}
         className="flex justify-end mt-8 space-x-4"
       >
-        <button className="flex items-center py-2 px-4 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-100 transition shadow-sm">
+        <button className="flex text-sm sm:text-base items-center py-2 px-4 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-100 transition shadow-sm">
           <Save className="w-5 h-5 mr-2" /> Save Result
         </button>
         <button
           onClick={() => navigate("home")}
-          className="flex items-center py-2 px-6 text-white font-bold rounded-full transition duration-300 shadow-lg hover:shadow-xl"
+          className="flex items-center text-sm sm:text-base py-2 px-6 text-white font-bold rounded-full transition duration-300 shadow-lg hover:shadow-xl"
           style={{
             background: `linear-gradient(to right, ${brandGreen}, #064E3B)`,
             boxShadow: `0 4px 12px -3px ${brandGreen}88`,

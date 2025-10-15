@@ -7,9 +7,10 @@ import { FaHome, FaHistory } from "react-icons/fa";
 export type pageType = "home" | "result" | "history";
 
 const App = () => {
-  const [page, setPage] = useState<string>("home"); // 'home', 'result', or 'history'
+  const [page, setPage] = useState<pageType>("home");
+  const [image, setImage] = useState<File | null>(null);
 
-  const navigate = (newPage: string) => setPage(newPage);
+  const navigate = (newPage: pageType) => setPage(newPage);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white flex flex-col items-center justify-center p-4">
@@ -36,9 +37,15 @@ const App = () => {
         transition={{ type: "spring", stiffness: 120 }}
       >
         <AnimatePresence mode="wait">
-          {page === "home" && <HomeUpload navigate={navigate} key="home" />}
+          {page === "home" && (
+            <HomeUpload
+              imageState={{ image, setImage }}
+              navigate={navigate}
+              key="home"
+            />
+          )}
           {page === "result" && (
-            <DiagnosisResult navigate={navigate} key="result" />
+            <DiagnosisResult image={image} navigate={navigate} key="result" />
           )}
           {page === "history" && (
             <HistoryInsights navigate={navigate} key="history" />
