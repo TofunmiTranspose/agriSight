@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, CheckCircle, Save, Repeat, RefreshCcw } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle,
+  Save,
+  Repeat,
+  RefreshCcw,
+  Activity,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import type { pageType } from "../App";
 
@@ -16,6 +23,7 @@ const DiagnosisResult = ({
   const result = {
     disease: "Cassava Mosaic Virus",
     severity: "Moderate",
+    confidence: 87, // new confidence score
     remedies: [
       "Remove infected leaves immediately and destroy them.",
       "Apply organic neem oil weekly to affected plants.",
@@ -37,7 +45,6 @@ const DiagnosisResult = ({
         animate={{ opacity: 1 }}
         className="flex flex-col items-center justify-center h-80 text-center relative"
       >
-        {/* Subtle background glow */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-10 left-10 w-56 h-56 bg-[#1FAB89]/30 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-56 h-56 bg-[#064E3B]/20 rounded-full blur-3xl"></div>
@@ -118,6 +125,7 @@ const DiagnosisResult = ({
           transition={{ delay: 0.3 }}
           className="bg-white/70 backdrop-blur-md p-5 rounded-xl border border-[#1FAB89]/20 shadow-md hover:shadow-lg transition"
         >
+          {/* Diagnosis Summary */}
           <div className="flex items-center mb-4">
             <CheckCircle className="w-6 h-6 text-[#1FAB89] mr-2" />
             <h3 className="text-lg font-semibold text-[#064E3B]">
@@ -127,17 +135,40 @@ const DiagnosisResult = ({
 
           <div className="bg-[#1FAB89]/10 p-4 rounded-lg mb-4 border-l-4 border-[#1FAB89]">
             <p className="font-bold text-lg text-[#064E3B]">{result.disease}</p>
-            <p
-              className={`text-sm font-medium mt-1 ${
-                result.severity === "Moderate"
-                  ? "text-orange-500"
-                  : "text-gray-600"
-              }`}
-            >
-              📊 Severity: {result.severity}
-            </p>
+            <div className="flex justify-between items-center mt-2">
+              <p
+                className={`text-sm font-medium ${
+                  result.severity === "Moderate"
+                    ? "text-orange-500"
+                    : "text-gray-600"
+                }`}
+              >
+                📊 Severity: {result.severity}
+              </p>
+              <div className="flex items-center text-sm text-gray-600">
+                <Activity className="w-4 h-4 mr-1 text-[#1FAB89]" />
+                Confidence:{" "}
+                <span className="ml-1 font-semibold text-[#064E3B]">
+                  {result.confidence}%
+                </span>
+              </div>
+            </div>
+
+            {/* Confidence Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${result.confidence}%` }}
+                transition={{ duration: 1 }}
+                className="h-2 rounded-full"
+                style={{
+                  background: `linear-gradient(to right, ${brandGreen}, #064E3B)`,
+                }}
+              ></motion.div>
+            </div>
           </div>
 
+          {/* Remedies */}
           <h4 className="font-semibold text-gray-700 mb-2 mt-4 flex items-center">
             💡 Recommended Actions
           </h4>
